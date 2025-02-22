@@ -10,13 +10,13 @@ exports.identify = async (req, res) => {
       return res.status(400).json({ error: "Email or phoneNumber is required" });
     }
 
-    // 🔎 **Find all contacts matching the given email or phone number**
+    // Find all contacts matching the given email or phone number
     let matchingContacts = await Contact.find({
       $or: [{ email }, { phoneNumber }],
     });
 
     if (matchingContacts.length === 0) {
-      // 🎯 **No match found, create a new primary contact**
+      // No match found, create a new primary contact
       const newContact = new Contact({
         email,
         phoneNumber,
@@ -32,7 +32,7 @@ exports.identify = async (req, res) => {
       });
     }
 
-    // 🔗 **Find the actual primary contact**
+    // Find the actual primary contact
     let primaryContact = matchingContacts.find((c) => c.linkPrecedence === "primary");
 
     if (!primaryContact) {
@@ -50,7 +50,7 @@ exports.identify = async (req, res) => {
       }
     }
 
-    // 🔄 **Ensure all secondary contacts link to the same primary**
+    // Ensure all secondary contacts link to the same primary
     let updatedContacts = [];
     for (let contact of matchingContacts) {
       if (contact._id.toString() !== primaryContact._id.toString()) {
@@ -63,7 +63,7 @@ exports.identify = async (req, res) => {
       }
     }
 
-    // 🆕 **If a new email or phone is provided, link it as a secondary**
+    // If a new email or phone is provided, link it as a secondary
     let newSecondaryContact = null;
     if (
       (email && !matchingContacts.some((c) => c.email === email)) ||
@@ -79,12 +79,12 @@ exports.identify = async (req, res) => {
       updatedContacts.push(newSecondaryContact);
     }
 
-    // 🔍 **Find all contacts related to the primary account**
+    // Find all contacts related to the primary account
     let allRelatedContacts = await Contact.find({
       $or: [{ _id: primaryContact._id }, { linkedId: primaryContact._id }],
     });
 
-    // 📝 **Prepare the response**
+    // Prepare the response
     const emails = new Set();
     const phoneNumbers = new Set();
     const secondaryContactIds = [];
