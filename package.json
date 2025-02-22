@@ -1,0 +1,27 @@
+{
+  "name": "emotarad",
+  "version": "1.0.0",
+  "description": "Assignment",
+  "homepage": "https://github.com/Lakshman155/Emotarad#readme",
+  "bugs": {
+    "url": "https://github.com/Lakshman155/Emotarad/issues"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Lakshman155/Emotarad.git"
+  },
+  "license": "ISC",
+  "author": "",
+  "type": "commonjs",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.3",
+    "dotenv": "^16.4.7",
+    "express": "^4.21.2",
+    "mongoose": "^8.10.1",
+    "nodemon": "^3.1.9"
+  }
+}
